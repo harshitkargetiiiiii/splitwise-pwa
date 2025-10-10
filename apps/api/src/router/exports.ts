@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { prisma } from "../db/prisma";
 import { calculateBalances } from "../domain/postings";
+import { getOrigin } from "../lib/origin";
 
 const router = Router();
 
@@ -82,7 +83,8 @@ router.post("/:spaceId/share-settle", async (req, res) => {
   
   // In production, create a token and store it
   const token = `share_${Date.now()}`;
-  const publicUrl = `${process.env.FRONTEND_URL}/shared/${token}`;
+  const base = getOrigin(req);
+  const publicUrl = `${base}/shared/${token}`;
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
   
   res.json({ publicUrl, expiresAt });

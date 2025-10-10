@@ -13,14 +13,14 @@ import exportsRouter from "./router/exports";
 export function makeApp() {
   const app = express();
 
-  // CORS configuration - allow same-origin in production (Vercel) or specific origin in dev
-  const isProduction = process.env.NODE_ENV === "production";
-  const corsOrigin = isProduction 
-    ? true // Same-origin on Vercel (single-origin setup)
-    : (process.env.FRONTEND_URL || "http://localhost:5173");
+  // Trust proxy to read headers correctly on Vercel/proxies
+  app.set("trust proxy", 1);
 
+  // CORS configuration - same-origin in production, explicit dev origin
+  const isProduction = process.env.NODE_ENV === "production";
+  const devOrigin = process.env.FRONTEND_URL || "http://localhost:5173";
   app.use(cors({
-    origin: corsOrigin,
+    origin: isProduction ? true : devOrigin,
     credentials: true,
   }));
 

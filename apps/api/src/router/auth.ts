@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { prisma } from "../db/prisma";
 import { ulid } from "ulid";
+import { getOrigin } from "../lib/origin";
 
 const router = Router();
 
@@ -37,7 +38,8 @@ router.post("/magic/start", async (req, res) => {
   });
   
   // In production: send email with link
-  const magicUrl = `${process.env.FRONTEND_URL}/auth/verify?token=${token}`;
+  const base = getOrigin(req);
+  const magicUrl = `${base}/auth/verify?token=${token}`;
   
   res.json({
     message: "Magic link created (check console in dev)",
@@ -66,7 +68,7 @@ router.get("/magic/verify", async (req, res) => {
   // Delete used token
   await prisma.magicLink.delete({ where: { token } });
   
-  res.redirect(process.env.FRONTEND_URL || "http://localhost:5173");
+  res.redirect(getOrigin(req));
 });
 
 router.get("/me", async (req, res) => {

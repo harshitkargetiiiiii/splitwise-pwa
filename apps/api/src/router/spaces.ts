@@ -2,6 +2,7 @@ import { Router } from "express";
 import { prisma } from "../db/prisma";
 import { ulid } from "ulid";
 import { createSpaceSchema, inviteSchema } from "@splitwise/types";
+import { getOrigin } from "../lib/origin";
 
 const router = Router();
 
@@ -135,7 +136,8 @@ router.post("/:id/invites", async (req, res) => {
     },
   });
   
-  const inviteUrl = `${process.env.FRONTEND_URL}/join?token=${token}`;
+  const base = getOrigin(req);
+  const inviteUrl = `${base}/join?token=${token}`;
   
   res.json({ token, inviteUrl });
 });
