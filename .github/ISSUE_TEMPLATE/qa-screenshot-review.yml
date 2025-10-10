@@ -1,0 +1,178 @@
+name: QA Screenshot Review
+description: Screenshot-based QA checklist for verifying rounding, FX, settle plan, offline outbox, and PWA wiring
+title: "QA: Screenshot Review — [DATE]"
+labels: ["qa", "testing", "screenshots"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## QA Screenshot Review
+
+        Please follow the [QA Screenshot Review Checklist](/docs/QA_Screenshot_Review.md) and attach screenshots for each step below. Use the exact test data specified in the checklist to ensure expected values match.
+
+  - type: textarea
+    id: screenshot-01-home
+    attributes:
+      label: "[01-Home] Home Screen"
+      description: "Show space list + 'New Space' button. On mobile, show the FAB '+'."
+      placeholder: "Paste screenshot link(s) or drag images here"
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshot-02-space-settings
+    attributes:
+      label: "[02-Space-Settings] Create/Join Space"
+      description: "Show base currency and members (avatars/chips)."
+      placeholder: "Paste screenshot link(s) or drag images here"
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshot-03-dashboard
+    attributes:
+      label: "[03-Dashboard] Space Dashboard"
+      description: "Balances panel + Recent Activity. Confirm sum of nets ≈ 0."
+      placeholder: "Paste screenshot link(s) or drag images here"
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshot-04-equal
+    attributes:
+      label: "[04-Add-Equal] Add Expense — Equal Split"
+      description: "$10.00, participants Alice, Bob, You. Expected: 3.34 / 3.33 / 3.33"
+      placeholder: "Paste screenshot link(s) or drag images here"
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshot-05-percent
+    attributes:
+      label: "[05-Add-Percent] Add Expense — Percent Split"
+      description: "$100.00, 34% / 33% / 33%. Expected: 34.00 / 33.00 / 33.00"
+      placeholder: "Paste screenshot link(s) or drag images here"
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshot-06-shares
+    attributes:
+      label: "[06-Add-Shares] Add Expense — Shares Split"
+      description: "$10.00, shares 1/2/3. Expected: 1.67 / 3.33 / 5.00"
+      placeholder: "Paste screenshot link(s) or drag images here"
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshot-07-itemized
+    attributes:
+      label: "[07-Itemized] Itemized (OCR) View"
+      description: "Items list, assignment UI, 'Apply to split'. Show graceful fallback if OCR fails."
+      placeholder: "Paste screenshot link(s) or drag images here"
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshot-08-multi-currency
+    attributes:
+      label: "[08-Multi-Currency] Multi-Currency Expense"
+      description: "INR 1,000 at 0.012 USD/INR → USD 12.00. Show 'FX locked' note."
+      placeholder: "Paste screenshot link(s) or drag images here"
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshot-09-settle-plan
+    attributes:
+      label: "[09-Settle-Plan] Settle Plan"
+      description: "Transfers list, then after marking one Paid. Show helper text 'balances reach ±$0.01'."
+      placeholder: "Paste screenshot link(s) or drag images here"
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshot-10-offline
+    attributes:
+      label: "[10-Offline-Outbox] Offline / Outbox"
+      description: "DevTools Offline → save expense → Pending sync banner. Go Online → banner disappears, expense appears."
+      placeholder: "Paste screenshot link(s) or drag images here"
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshot-11-pwa
+    attributes:
+      label: "[11-PWA-Wiring] PWA Manifest & Service Worker"
+      description: "DevTools → Application → Manifest (installable, icons) and Service Workers (registered + active)."
+      placeholder: "Paste screenshot link(s) or drag images here"
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshot-12-responsive
+    attributes:
+      label: "[12-Responsive] Responsive Layout"
+      description: "Mobile (~375–430px) and desktop views of Space Dashboard."
+      placeholder: "Paste screenshot link(s) or drag images here"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: verification-checks
+    attributes:
+      label: "Verification Checks"
+      description: "Confirm each of the following key behaviors"
+      options:
+        - label: "Equal split matches expected: Alice $3.34, Bob $3.33, You $3.33"
+          required: true
+        - label: "Percent split matches expected: Alice $34.00, Bob $33.00, You $33.00"
+          required: true
+        - label: "Shares split matches expected: Alice $1.67, Bob $3.33, You $5.00"
+          required: true
+        - label: "FX locked indicator visible for multi-currency expense (INR 1,000 → USD $12.00)"
+          required: true
+        - label: "Pending Sync banner shows when offline"
+          required: true
+        - label: "Service Worker is registered and active"
+          required: true
+        - label: "Manifest is installable with valid icons"
+          required: true
+        - label: "Responsive layout works on mobile and desktop"
+          required: true
+
+  - type: textarea
+    id: csv-export-sample
+    attributes:
+      label: "CSV Export Sample (Optional)"
+      description: "Paste the first 5 lines of a CSV export for ledger sanity-check."
+      placeholder: "Paste CSV lines here"
+    validations:
+      required: false
+
+  - type: textarea
+    id: toasts-banners
+    attributes:
+      label: "Toasts/Banners Text (Optional)"
+      description: "Copy any toast messages or banners you encountered for wording review."
+      placeholder: "Paste toast/banner messages here"
+    validations:
+      required: false
+
+  - type: textarea
+    id: notes-bugs
+    attributes:
+      label: "Notes / Bugs Found"
+      description: "Any issues, unexpected behaviors, or suggestions for improvement."
+      placeholder: "Describe any bugs or observations here"
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        **Thank you for your thorough QA work!** 🎉
+
+
+
