@@ -6,8 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Money } from "@/components/Money";
 import { MemberChip } from "@/components/MemberChip";
 import { api } from "@/lib/api";
-import { Plus, Download, Share2 } from "lucide-react";
-import type { Space as SpaceType } from "@splitwise/types";
+import { Plus, Download } from "lucide-react";
 
 export function Space() {
   const { id } = useParams<{ id: string }>();

@@ -18,7 +18,7 @@ router.use(requireAuth);
 
 // Create expense
 router.post("/:spaceId/expenses", async (req, res) => {
-  const userId = req.session.userId;
+  const userId = req.session.userId!;
   const spaceId = req.params.spaceId;
   
   // Check membership
@@ -105,7 +105,7 @@ router.post("/:spaceId/expenses", async (req, res) => {
 
 // Get expenses for space
 router.get("/:spaceId/expenses", async (req, res) => {
-  const userId = req.session.userId;
+  const userId = req.session.userId!;
   const spaceId = req.params.spaceId;
   
   const membership = await prisma.membership.findUnique({
@@ -138,7 +138,7 @@ router.get("/:spaceId/expenses", async (req, res) => {
 
 // Get expense detail
 router.get("/expenses/:id", async (req, res) => {
-  const userId = req.session.userId;
+  const userId = req.session.userId!;
   const expenseId = req.params.id;
   
   const expense = await prisma.expense.findUnique({
@@ -169,7 +169,7 @@ router.get("/expenses/:id", async (req, res) => {
 
 // Edit expense (creates new revision)
 router.patch("/expenses/:id", async (req, res) => {
-  const userId = req.session.userId;
+  const userId = req.session.userId!;
   const expenseId = req.params.id;
   
   const expense = await prisma.expense.findUnique({

@@ -16,7 +16,7 @@ router.use(requireAuth);
 
 // Get balances for space
 router.get("/:spaceId/balances", async (req, res) => {
-  const userId = req.session.userId;
+  const userId = req.session.userId!;
   const spaceId = req.params.spaceId;
   
   const membership = await prisma.membership.findUnique({
@@ -45,7 +45,7 @@ router.get("/:spaceId/balances", async (req, res) => {
 
 // Generate settle plan
 router.post("/:spaceId/settle-plan", async (req, res) => {
-  const userId = req.session.userId;
+  const userId = req.session.userId!;
   const spaceId = req.params.spaceId;
   
   const membership = await prisma.membership.findUnique({

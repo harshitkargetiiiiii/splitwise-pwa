@@ -15,7 +15,7 @@ router.use(requireAuth);
 
 // Export CSV
 router.get("/:spaceId/export.csv", async (req, res) => {
-  const userId = req.session.userId;
+  const userId = req.session.userId!;
   const spaceId = req.params.spaceId;
   
   const membership = await prisma.membership.findUnique({
@@ -69,7 +69,7 @@ router.get("/:spaceId/export.csv", async (req, res) => {
 
 // Create shareable settle summary (stub - would store token)
 router.post("/:spaceId/share-settle", async (req, res) => {
-  const userId = req.session.userId;
+  const userId = req.session.userId!;
   const spaceId = req.params.spaceId;
   
   const membership = await prisma.membership.findUnique({

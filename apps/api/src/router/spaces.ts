@@ -24,7 +24,7 @@ router.post("/", async (req, res) => {
   }
   
   const { name, baseCurrency, icon } = result.data;
-  const userId = req.session.userId;
+  const userId = req.session.userId!;
   
   const space = await prisma.space.create({
     data: {
@@ -51,7 +51,7 @@ router.post("/", async (req, res) => {
 
 // List user's spaces
 router.get("/", async (req, res) => {
-  const userId = req.session.userId;
+  const userId = req.session.userId!;
   
   const memberships = await prisma.membership.findMany({
     where: { userId },
@@ -75,7 +75,7 @@ router.get("/", async (req, res) => {
 
 // Get space details
 router.get("/:id", async (req, res) => {
-  const userId = req.session.userId;
+  const userId = req.session.userId!;
   
   const membership = await prisma.membership.findUnique({
     where: {
@@ -108,7 +108,7 @@ router.get("/:id", async (req, res) => {
 
 // Create invite token
 router.post("/:id/invites", async (req, res) => {
-  const userId = req.session.userId;
+  const userId = req.session.userId!;
   const spaceId = req.params.id;
   
   const membership = await prisma.membership.findUnique({
@@ -143,7 +143,7 @@ router.post("/:id/invites", async (req, res) => {
 // Join via invite
 router.post("/join", async (req, res) => {
   const { token, displayName } = req.body;
-  const userId = req.session.userId;
+  const userId = req.session.userId!;
   
   if (!token) {
     return res.status(400).json({ error: "Token required" });
@@ -194,7 +194,7 @@ router.post("/join", async (req, res) => {
 
 // Get space members
 router.get("/:id/members", async (req, res) => {
-  const userId = req.session.userId;
+  const userId = req.session.userId!;
   const spaceId = req.params.id;
   
   const membership = await prisma.membership.findUnique({

@@ -16,12 +16,12 @@ interface ReceiptScannerProps {
   onItemsExtracted: (items: ReceiptItem[]) => void;
 }
 
-export function ReceiptScanner({ members, onItemsExtracted }: ReceiptScannerProps) {
+export function ReceiptScanner({ members: _members, onItemsExtracted }: ReceiptScannerProps) {
   const [items, setItems] = useState<ReceiptItem[]>([]);
   const [scanning, setScanning] = useState(false);
 
   // OCR stub - in production, use Tesseract.js
-  const handleScanReceipt = async (file: File) => {
+  const handleScanReceipt = async (_file: File) => {
     setScanning(true);
     
     // Mock OCR processing
