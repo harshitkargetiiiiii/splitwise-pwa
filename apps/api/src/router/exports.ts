@@ -51,9 +51,9 @@ router.get("/:spaceId/export.csv", async (req, res) => {
   let csv = "Type,Date,Payer,Amount,Currency,Note,Category\n";
   
   for (const expense of expenses) {
-    const revision = expense.revisions.find((r) => r.id === expense.currentRevisionId);
+    const revision = expense.revisions.find((r: { id: string }) => r.id === expense.currentRevisionId);
     if (revision) {
-      const payer = expense.postings.find((p) => p.userId === revision.payerId)?.user.name || "Unknown";
+      const payer = expense.postings.find((p: { userId: string; user: { name: string } }) => p.userId === revision.payerId)?.user.name || "Unknown";
       csv += `Expense,${revision.date},"${payer}",${revision.nativeAmountMinor / 100},${revision.nativeCurrency},"${revision.note || ""}","${revision.category || ""}"\n`;
     }
   }

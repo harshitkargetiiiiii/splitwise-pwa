@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { prisma } from "../db/prisma";
+import { Prisma } from "@prisma/client";
 import { ulid } from "ulid";
 import { createExpenseSchema } from "@splitwise/types";
 import { calculateSplit } from "../domain/rounding";
@@ -58,7 +59,7 @@ router.post("/:spaceId/expenses", async (req, res) => {
   
   const space = await prisma.space.findUnique({ where: { id: spaceId } });
   
-  await prisma.$transaction(async (tx) => {
+  await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
     await tx.expense.create({
       data: {
         id: expenseId,
@@ -124,7 +125,7 @@ router.get("/:spaceId/expenses", async (req, res) => {
     include: {
       revisions: {
         where: {
-          id: { in: await prisma.expense.findMany({ where: { spaceId } }).then(e => e.map(x => x.currentRevisionId)) }
+          id: { in: await prisma.expense.findMany({ where: { spaceId } }).then((e: { currentRevisionId: string }[]) => e.map((x: { currentRevisionId: string }) => x.currentRevisionId)) }
         },
       },
     },
@@ -213,7 +214,7 @@ router.patch("/expenses/:id", async (req, res) => {
   
   const space = await prisma.space.findUnique({ where: { id: expense.spaceId } });
   
-  await prisma.$transaction(async (tx) => {
+  await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
     await tx.expenseRevision.create({
       data: {
         id: revisionId,

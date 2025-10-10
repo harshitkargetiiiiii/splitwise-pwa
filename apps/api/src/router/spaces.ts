@@ -70,7 +70,7 @@ router.get("/", async (req, res) => {
     },
   });
   
-  res.json(memberships.map((m) => m.space));
+  res.json(memberships.map((m: { space: any }) => m.space));
 });
 
 // Get space details

@@ -37,7 +37,7 @@ router.get("/:spaceId/balances", async (req, res) => {
   
   const result = balances.map((b) => ({
     ...b,
-    user: users.find((u) => u.id === b.userId),
+    user: users.find((u: { id: string; name: string; avatarUrl: string | null }) => u.id === b.userId),
   }));
   
   res.json(result);
@@ -68,8 +68,8 @@ router.post("/:spaceId/settle-plan", async (req, res) => {
   
   const result = plan.map((t) => ({
     ...t,
-    fromUser: users.find((u) => u.id === t.from),
-    toUser: users.find((u) => u.id === t.to),
+    fromUser: users.find((u: { id: string; name: string; avatarUrl: string | null }) => u.id === t.from),
+    toUser: users.find((u: { id: string; name: string; avatarUrl: string | null }) => u.id === t.to),
   }));
   
   res.json(result);
