@@ -16,6 +16,9 @@ export function makeApp() {
   // Trust proxy to read headers correctly on Vercel/proxies
   app.set("trust proxy", 1);
 
+  // Check environment
+  const isProduction = process.env.NODE_ENV === "production";
+
   // CORS configuration
   const allowedOrigins = [
     process.env.FRONTEND_URL || "http://localhost:5173",
