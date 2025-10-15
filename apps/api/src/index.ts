@@ -16,11 +16,14 @@ export function makeApp() {
   // Trust proxy to read headers correctly on Vercel/proxies
   app.set("trust proxy", 1);
 
-  // CORS configuration - same-origin in production, explicit dev origin
-  const isProduction = process.env.NODE_ENV === "production";
-  const devOrigin = process.env.FRONTEND_URL || "http://localhost:5173";
+  // CORS configuration
+  const allowedOrigins = [
+    process.env.FRONTEND_URL || "http://localhost:5173",
+    "http://localhost:5173", // Always allow local dev
+  ].filter(Boolean);
+  
   app.use(cors({
-    origin: isProduction ? true : devOrigin,
+    origin: allowedOrigins,
     credentials: true,
   }));
 
@@ -55,10 +58,9 @@ export function makeApp() {
 }
 
 // Run as standalone server if executed directly
-if (import.meta.url === `file://${process.argv[1]}`) {
-  const PORT = process.env.PORT || 3001;
-  const app = makeApp();
-  app.listen(PORT, () => {
-    console.log(`API server running on http://localhost:${PORT}`);
-  });
-}
+// In CommonJS, use require.main to check if this is the entry point
+const PORT = process.env.PORT || 3001;
+const app = makeApp();
+app.listen(PORT, () => {
+  console.log(`API server running on http://localhost:${PORT}`);
+});
