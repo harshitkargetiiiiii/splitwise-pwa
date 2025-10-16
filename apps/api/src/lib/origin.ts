@@ -4,7 +4,8 @@ import type { Request } from "express";
 export function getOrigin(req?: Request): string {
   // Explicit override (useful in local dev proxy)
   if (process.env.FRONTEND_URL && process.env.FRONTEND_URL.trim() !== "") {
-    return process.env.FRONTEND_URL;
+    // If multiple URLs (comma-separated), use the first one
+    return process.env.FRONTEND_URL.split(",")[0].trim();
   }
 
   // Prefer proxy headers (Vercel / tunnels)
